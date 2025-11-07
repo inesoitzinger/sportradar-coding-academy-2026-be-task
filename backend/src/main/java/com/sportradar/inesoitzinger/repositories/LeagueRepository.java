@@ -1,4 +1,7 @@
 package com.sportradar.inesoitzinger.repositories;
 
-public interface LeagueRepository {
+import com.sportradar.inesoitzinger.models.League;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LeagueRepository extends JpaRepository<League, Long> {
 }

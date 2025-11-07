@@ -1,11 +1,11 @@
 package com.sportradar.inesoitzinger.models;
 
+import com.sportradar.inesoitzinger.enums.MatchStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "matches")
@@ -17,6 +17,8 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String title;
 
     @ManyToOne
     @JoinColumn(name = "home_team_id")
@@ -30,8 +32,12 @@ public class Match {
     @JoinColumn(name = "venue_id")
     private Venue venue;
 
+    @ManyToOne
+    @JoinColumn(name = "league_id")
+    private  League league;
+
     @Column(name = "start_at")
-    private LocalDateTime startAt;
+    private Instant startAt;
 
     @Column(name = "home_score")
     private Long homeScore;
@@ -39,5 +45,8 @@ public class Match {
     @Column(name = "away_score")
     private Long awayScore;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MatchStatus status;
+
 }

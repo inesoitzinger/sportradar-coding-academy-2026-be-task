@@ -18,9 +18,4 @@ public class Team {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "sport_id")
-    private Sport sport;
-
-
 }

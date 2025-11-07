@@ -1,9 +1,6 @@
 package com.sportradar.inesoitzinger;
 
-import com.sportradar.inesoitzinger.repositories.MatchRepository;
-import com.sportradar.inesoitzinger.repositories.SportRepository;
-import com.sportradar.inesoitzinger.repositories.TeamRepository;
-import com.sportradar.inesoitzinger.repositories.VenueRepository;
+import com.sportradar.inesoitzinger.repositories.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,16 +11,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BackendApplicationTests {
 
     @Autowired
-    SportRepository sportRepository;
+    private SportRepository sportRepository;
 
     @Autowired
-    TeamRepository teamRepository;
+    private TeamRepository teamRepository;
 
     @Autowired
-    VenueRepository venueRepository;
+    private VenueRepository venueRepository;
 
     @Autowired
-    MatchRepository matchRepository;
+    private MatchRepository matchRepository;
+
+    @Autowired
+    private LeagueRepository leagueRepository;
 
     @Test
     void can_fetch_sports() {
@@ -32,6 +32,16 @@ class BackendApplicationTests {
 
         sports.forEach(s ->
                 System.out.println(s.getId() + " - " + s.getName())
+        );
+    }
+
+    @Test
+    void can_fetch_leagues(){
+        var leagues = leagueRepository.findAll();
+        assertThat(leagues).isNotEmpty();
+
+        leagues.forEach( l ->
+                System.out.println(l.getId() + " - " + l.getName())
         );
     }
 
@@ -61,10 +71,8 @@ class BackendApplicationTests {
         assertThat(matches).isNotEmpty();
 
         matches.forEach(m ->
-                System.out.println(m.getId()
-                        + " - " + m.getHomeTeam().getName()
-                        + " - " + m.getAwayTeam().getName()
-        ));
+                System.out.println(m.getId() + " - " + m.getTitle())
+        );
     }
 
 }
