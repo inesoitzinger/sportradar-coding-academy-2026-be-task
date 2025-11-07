@@ -40,10 +40,10 @@ public class Match {
     private Instant startAt;
 
     @Column(name = "home_score")
-    private Long homeScore;
+    private Integer homeScore;
 
     @Column(name = "away_score")
-    private Long awayScore;
+    private Integer awayScore;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
