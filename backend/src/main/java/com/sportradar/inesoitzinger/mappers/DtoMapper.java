@@ -25,7 +25,8 @@ public class DtoMapper {
     public TeamDto toTeamDto(Team e) {
         return new TeamDto(
                 e.getId(),
-                e.getName()
+                e.getName(),
+                toSportDto(e.getSport())
         );
     }
 

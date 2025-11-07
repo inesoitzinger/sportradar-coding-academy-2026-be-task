@@ -25,70 +25,71 @@ INSERT INTO leagues (name, country, short_code, sport_id) VALUES
 
 -- ===== TEAMS =====
 -- Premier League (EPL)
-INSERT INTO teams (name) VALUES
-  ('Liverpool FC'),
-  ('Arsenal FC'),
-  ('Manchester City'),
-  ('Chelsea FC'),
-  ('Tottenham Hotspur'),
-  ('Manchester United'),
-  ('Newcastle United'),
-  ('Brighton & Hove Albion');
+INSERT INTO teams (name, sport_id) VALUES
+  ('Liverpool FC', 1),
+  ('Arsenal FC', 1),
+  ('Manchester City', 1),
+  ('Chelsea FC', 1),
+  ('Tottenham Hotspur', 1),
+  ('Manchester United', 1),
+  ('Newcastle United', 1),
+  ('Brighton & Hove Albion', 1);
 
 -- Bundesliga (BL1)
-INSERT INTO teams (name) VALUES
-  ('FC Bayern München'),
-  ('Borussia Dortmund'),
-  ('RB Leipzig'),
-  ('Bayer 04 Leverkusen'),
-  ('VfB Stuttgart'),
-  ('Eintracht Frankfurt'),
-  ('Borussia Mönchengladbach'),
-  ('SC Freiburg');
+INSERT INTO teams (name, sport_id) VALUES
+  ('FC Bayern München', 1),
+  ('Borussia Dortmund', 1),
+  ('RB Leipzig', 1),
+  ('Bayer 04 Leverkusen', 1),
+  ('VfB Stuttgart', 1),
+  ('Eintracht Frankfurt', 1),
+  ('Borussia Mönchengladbach', 1),
+  ('SC Freiburg', 1);
 
 -- NHL
-INSERT INTO teams (name) VALUES
-  ('Boston Bruins'),
-  ('New York Rangers'),
-  ('Toronto Maple Leafs'),
-  ('Montréal Canadiens'),
-  ('Detroit Red Wings'),
-  ('Chicago Blackhawks'),
-  ('Tampa Bay Lightning'),
-  ('Pittsburgh Penguins');
+INSERT INTO teams (name, sport_id) VALUES
+  ('Boston Bruins', 2),
+  ('New York Rangers', 2),
+  ('Toronto Maple Leafs', 2),
+  ('Montréal Canadiens', 2),
+  ('Detroit Red Wings', 2),
+  ('Chicago Blackhawks', 2),
+  ('Tampa Bay Lightning', 2),
+  ('Pittsburgh Penguins', 2);
 
 -- ICEHL
-INSERT INTO teams (name) VALUES
-  ('EC KAC'),
-  ('EC Red Bull Salzburg'),
-  ('HC Bolzano'),
-  ('Vienna Capitals'),
-  ('Graz99ers'),
-  ('Black Wings Linz'),
-  ('HC Innsbruck'),
-  ('Fehérvár AV19');
+INSERT INTO teams (name, sport_id) VALUES
+  ('EC KAC', 2),
+  ('EC Red Bull Salzburg', 2),
+  ('HC Bolzano', 2),
+  ('Vienna Capitals', 2),
+  ('Graz99ers', 2),
+  ('Black Wings Linz', 2),
+  ('HC Innsbruck', 2),
+  ('Fehérvár AV19', 2);
 
 -- NBA
-INSERT INTO teams (name) VALUES
-  ('Boston Celtics'),
-  ('Los Angeles Lakers'),
-  ('Golden State Warriors'),
-  ('Miami Heat'),
-  ('Milwaukee Bucks'),
-  ('Dallas Mavericks'),
-  ('New York Knicks'),
-  ('Denver Nuggets');
+INSERT INTO teams (name, sport_id) VALUES
+  ('Boston Celtics', 3),
+  ('Los Angeles Lakers', 3),
+  ('Golden State Warriors', 3),
+  ('Miami Heat', 3),
+  ('Milwaukee Bucks', 3),
+  ('Dallas Mavericks', 3),
+  ('New York Knicks', 3),
+  ('Denver Nuggets', 3);
 
 -- EuroLeague (EL)
-INSERT INTO teams (name) VALUES
-  ('Real Madrid Baloncesto'),
-  ('FC Barcelona'),
-  ('Anadolu Efes'),
-  ('Olympiacos Piraeus'),
-  ('Panathinaikos'),
-  ('Fenerbahçe'),
-  ('AS Monaco'),
-  ('Maccabi Tel Aviv');
+INSERT INTO teams (name, sport_id) VALUES
+  ('Real Madrid Baloncesto', 3),
+  ('FC Barcelona', 3),
+  ('Anadolu Efes', 3),
+  ('Olympiacos Piraeus', 3),
+  ('Panathinaikos', 3),
+  ('Fenerbahçe', 3),
+  ('AS Monaco', 3),
+  ('Maccabi Tel Aviv', 3);
+
 
 -- ===== TEAM ↔ LEAGUE =====
 -- EPL

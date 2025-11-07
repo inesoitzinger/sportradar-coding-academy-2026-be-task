@@ -30,7 +30,9 @@ CREATE TABLE leagues (
 
 CREATE TABLE teams (
   id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL,
+  sport_id INTEGER NOT NULL,
+  FOREIGN KEY (sport_id) REFERENCES sports (id)
 );
 
 CREATE TABLE team_leagues (
