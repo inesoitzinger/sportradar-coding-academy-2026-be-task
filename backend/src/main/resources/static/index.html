@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matches</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-left">
+        <button class="nav-btn">Home</button>
+    </div>
+
+    <div class="nav-center">
+        <input
+            id="search-input"
+            type="text"
+            placeholder="Search..."
+            onkeyup="if(event.key==='Enter') searchGlobal()">
+
+    </div>
+
+    <div class="nav-right">
+        <button class="nav-btn">Favorites</button>
+        <button class="nav-btn">Support</button>
+        <button class="nav-btn">Settings</button>
+        <button class="nav-btn primary">Login</button>
+    </div>
+</nav>
+
+
+
+<h1>Matches</h1>
+
+<div class="filters">
+
+    <label>Sport:</label>
+    <select id="sport-select">
+        <option value="">-</option>
+    </select>
+
+    <label>Status:</label>
+    <select id="status-select">
+        <option value="">-</option>
+        <option value="scheduled">SCHEDULED</option>
+        <option value="live">LIVE</option>
+        <option value="finished">FINISHED</option>
+    </select>
+
+    <label>Venue:</label>
+    <select id="venue-select">
+        <option value="">-</option>
+    </select>
+
+    <label>League:</label>
+    <select id="league-select">
+        <option value="">-</option>
+    </select>
+
+    <label>Team:</label>
+    <select id="team-select">
+        <option value="">-</option>
+    </select>
+
+    <button onclick="applyFilters()">Filter anwenden</button>
+    <button onclick="loadAll()">Reset</button>
+
+
+</div>
+
+<table id="matches">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Sport</th>
+        <th>League</th>
+        <th>Match</th>
+        <th>Venue</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script src="app.js"></script>
+
+</body>
+</html>

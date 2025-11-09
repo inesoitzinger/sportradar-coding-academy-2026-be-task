@@ -1,6 +1,5 @@
 package com.sportradar.inesoitzinger.services;
 
-import com.sportradar.inesoitzinger.dtos.MatchDto;
 import com.sportradar.inesoitzinger.enums.MatchStatus;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.Match;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,28 +27,28 @@ public class MatchService {
                 .orElseThrow(() -> new EntityNotFoundException("Match " + id + " not found"));
     }
 
-    public List<Match> getByStatus(MatchStatus status) {
-        return matchRepository.findByStatus(status);
+    public List<Match> search(Map<String, String> params) {
+        if (params.containsKey("q") && !params.get("q").isBlank()) {
+            return matchRepository.searchByText(params.get("q"));
+        }
+
+        Long sportId  = params.containsKey("sportId")  && !params.get("sportId").isBlank()
+                ? Long.parseLong(params.get("sportId")) : null;
+
+        String status = params.containsKey("status") && !params.get("status").isBlank()
+                ? params.get("status") : null;
+
+        Long venueId  = params.containsKey("venueId")  && !params.get("venueId").isBlank()
+                ? Long.parseLong(params.get("venueId")) : null;
+
+        Long leagueId = params.containsKey("leagueId") && !params.get("leagueId").isBlank()
+                ? Long.parseLong(params.get("leagueId")) : null;
+
+        Long teamId   = params.containsKey("teamId")   && !params.get("teamId").isBlank()
+                ? Long.parseLong(params.get("teamId")) : null;
+
+        return matchRepository.searchDynamic(sportId, status, venueId, leagueId, teamId);
     }
 
-    public List<Match> getFromNow(Instant now) {
-        return matchRepository.findByStartAtAfter(now);
-    }
-
-    public List<Match> getByLeagueId(long leagueId) {
-        return matchRepository.findByLeagueId(leagueId);
-    }
-
-    public List<Match> getByTeamId(long teamId) {
-        return matchRepository.findByTeamId(teamId);
-    }
-
-    public List<Match> getBySportId(long sportId) {
-        return matchRepository.findBySportId(sportId);
-    }
-
-    public List<Match> getByVenueId(long venueId) {
-        return matchRepository.findByVenueId(venueId);
-    }
 
 }
