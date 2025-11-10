@@ -12,5 +12,7 @@ public record MatchDto(
         Instant startAt,
         Integer homeScore,
         Integer awayScore,
-        String status
+        String status,
+        Double homeWinProbability
+
 ) {}

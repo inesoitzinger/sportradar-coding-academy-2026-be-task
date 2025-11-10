@@ -2,6 +2,7 @@ package com.sportradar.inesoitzinger.controller;
 
 import com.sportradar.inesoitzinger.dtos.MatchDto;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
+import com.sportradar.inesoitzinger.models.Match;
 import com.sportradar.inesoitzinger.services.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +18,21 @@ public class MatchController {
     private final MatchService matchService;
     private final DtoMapper mapper;
 
+
     @GetMapping
     public List<MatchDto> search(@RequestParam Map<String,String> params) {
         return matchService.search(params)
                 .stream()
-                .map(mapper::toMatchDto)
+                .map(m -> mapper.toMatchDto(m, matchService.calcHomeWinProbability(m)))
                 .toList();
     }
 
+
     @GetMapping("/{id}")
     public MatchDto getOne(@PathVariable long id) {
-        return mapper.toMatchDto(matchService.getById(id));
+        Match m = matchService.getById(id);
+        Double p = matchService.calcHomeWinProbability(m);
+        return mapper.toMatchDto(m, p);
     }
+
 }

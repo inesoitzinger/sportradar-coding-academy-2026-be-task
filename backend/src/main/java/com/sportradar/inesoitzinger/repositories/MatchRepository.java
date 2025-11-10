@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
 
@@ -42,6 +43,20 @@ public interface MatchRepository extends JpaRepository<Match, Long> {
            OR lower(v.name) LIKE lower(concat('%', :q, '%'))
     """, nativeQuery = true)
     List<Match> searchByText(String q);
+
+    @Query(value = """
+        select 
+            coalesce(sum(case when m.home_team_id = :teamId and m.home_score > m.away_score then 1 else 0 end), 0) +
+            coalesce(sum(case when m.away_team_id = :teamId and m.away_score > m.home_score then 1 else 0 end), 0)
+            as wins,
+            count(*) as matches
+        from matches m
+        where m.status = 'finished'
+          and (m.home_team_id = :teamId or m.away_team_id = :teamId)
+    """, nativeQuery = true)
+        Map<String, Object> getRecord(long teamId);
+
+
 
 
 

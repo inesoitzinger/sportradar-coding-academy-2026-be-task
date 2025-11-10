@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+<script>
+    fetch("/nav.html").then(r => r.text()).then(html => {
+        document.getElementById("nav-placeholder").innerHTML = html;
+    });
+</script>
+
+<h1 id="sport-name">Sport</h1>
+
+<div class="table-container">
+    <table id="sport-leagues">
+        <thead><tr><th>Leagues</th></tr></thead>
+        <tbody></tbody>
+    </table>
+
+    <table id="sport-teams">
+        <thead><tr><th>Teams</th></tr></thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script src="app.js"></script>
+<script>
+    initSportPage();
+</script>
+
+</body>
+</html>

@@ -39,18 +39,21 @@ public class DtoMapper {
         );
     }
 
-    public MatchDto toMatchDto(Match e) {
+    public MatchDto toMatchDto(Match m, Double p){
+
         return new MatchDto(
-                e.getId(),
-                e.getTitle(),
-                toTeamDto(e.getHomeTeam()),
-                toTeamDto(e.getAwayTeam()),
-                toVenueDto(e.getVenue()),
-                toLeagueDto(e.getLeague()),
-                e.getStartAt(),         // Instant
-                e.getHomeScore(),
-                e.getAwayScore(),
-                e.getStatus().name()    // Enum → String
+                m.getId(),
+                m.getTitle(),
+                toTeamDto(m.getHomeTeam()),
+                toTeamDto(m.getAwayTeam()),
+                toVenueDto(m.getVenue()),
+                toLeagueDto(m.getLeague()),
+                m.getStartAt(),
+                m.getHomeScore(),
+                m.getAwayScore(),
+                m.getStatus().toString(),
+                p
         );
     }
+
 }

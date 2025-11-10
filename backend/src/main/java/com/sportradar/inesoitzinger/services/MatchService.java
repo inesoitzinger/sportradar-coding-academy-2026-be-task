@@ -27,28 +27,43 @@ public class MatchService {
                 .orElseThrow(() -> new EntityNotFoundException("Match " + id + " not found"));
     }
 
+    private static Long toLongOrNull(String v) {
+        return (v == null || v.isBlank()) ? null : Long.valueOf(v);
+    }
+
     public List<Match> search(Map<String, String> params) {
+
         if (params.containsKey("q") && !params.get("q").isBlank()) {
             return matchRepository.searchByText(params.get("q"));
         }
 
-        Long sportId  = params.containsKey("sportId")  && !params.get("sportId").isBlank()
-                ? Long.parseLong(params.get("sportId")) : null;
-
-        String status = params.containsKey("status") && !params.get("status").isBlank()
-                ? params.get("status") : null;
-
-        Long venueId  = params.containsKey("venueId")  && !params.get("venueId").isBlank()
-                ? Long.parseLong(params.get("venueId")) : null;
-
-        Long leagueId = params.containsKey("leagueId") && !params.get("leagueId").isBlank()
-                ? Long.parseLong(params.get("leagueId")) : null;
-
-        Long teamId   = params.containsKey("teamId")   && !params.get("teamId").isBlank()
-                ? Long.parseLong(params.get("teamId")) : null;
+        Long sportId  = toLongOrNull(params.get("sportId"));
+        String status = params.getOrDefault("status", "").isBlank() ? null : params.get("status");
+        Long venueId  = toLongOrNull(params.get("venueId"));
+        Long leagueId = toLongOrNull(params.get("leagueId"));
+        Long teamId   = toLongOrNull(params.get("teamId"));
 
         return matchRepository.searchDynamic(sportId, status, venueId, leagueId, teamId);
     }
+
+
+    public Double calcHomeWinProbability(Match m) {
+        System.out.println("STATUS = " + m.getStatus());
+
+        if (!m.getStatus().equals(MatchStatus.scheduled)) {
+            return null;
+        }
+
+
+        Map<String,Object> record = matchRepository.getRecord(m.getHomeTeam().getId());
+        long wins = ((Number)record.get("wins")).longValue();
+        long matches = ((Number)record.get("matches")).longValue();
+
+        if (matches == 0) return null;
+        return (double) wins / matches;
+    }
+
+
 
 
 }

@@ -10,14 +10,14 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- ===== SPORTS =====
 INSERT INTO sports (name) VALUES
-  ('Football'),      
+  ('Soccer'),      
   ('Ice Hockey'),
   ('Basketball');
 
 -- ===== LEAGUES (real world) =====
 INSERT INTO leagues (name, country, short_code, sport_id) VALUES
-  ('Premier League',            'England',        'EPL',    (SELECT id FROM sports WHERE name='Football')),
-  ('Bundesliga',                'Germany',        'BL1',    (SELECT id FROM sports WHERE name='Football')),
+  ('Premier League',            'England',        'EPL',    (SELECT id FROM sports WHERE name='Soccer')),
+  ('Bundesliga',                'Germany',        'BL1',    (SELECT id FROM sports WHERE name='Soccer')),
   ('NHL',                       'USA/Canada',     'NHL',    (SELECT id FROM sports WHERE name='Ice Hockey')),
   ('ICE Hockey League',         'Austria',        'ICEHL',  (SELECT id FROM sports WHERE name='Ice Hockey')),
   ('NBA',                       'USA',            'NBA',    (SELECT id FROM sports WHERE name='Basketball')),
@@ -89,7 +89,6 @@ INSERT INTO teams (name, sport_id) VALUES
   ('Fenerbahçe', 3),
   ('AS Monaco', 3),
   ('Maccabi Tel Aviv', 3);
-
 
 -- ===== TEAM ↔ LEAGUE =====
 -- EPL
@@ -200,28 +199,28 @@ INSERT INTO venues (name, city, capacity) VALUES
   ('Salle Gaston Médecin', 'Monaco', 4500),
   ('Menora Mivtachim Arena', 'Tel Aviv', 10500);
 
--- ===== MATCHES =====
+-- ===== INITIAL MATCHES =====
 -- EPL
 INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
-  ('Liverpool vs Arsenal – Premier League', 
+  ('Liverpool vs Arsenal', 
     (SELECT id FROM teams WHERE name='Liverpool FC'),
     (SELECT id FROM teams WHERE name='Arsenal FC'),
     (SELECT id FROM venues WHERE name='Anfield'),
     (SELECT id FROM leagues WHERE short_code='EPL'),
     '2025-08-16 17:30:00', 2, 1, 'finished'),
-  ('Manchester City vs Chelsea – Premier League', 
+  ('Manchester City vs Chelsea', 
     (SELECT id FROM teams WHERE name='Manchester City'),
     (SELECT id FROM teams WHERE name='Chelsea FC'),
     (SELECT id FROM venues WHERE name='Etihad Stadium'),
     (SELECT id FROM leagues WHERE short_code='EPL'),
     '2025-11-09 16:00:00', NULL, NULL, 'scheduled'),
-  ('Tottenham vs Manchester United – Premier League',
+  ('Tottenham vs Manchester United',
     (SELECT id FROM teams WHERE name='Tottenham Hotspur'),
     (SELECT id FROM teams WHERE name='Manchester United'),
     (SELECT id FROM venues WHERE name='Tottenham Hotspur Stadium'),
     (SELECT id FROM leagues WHERE short_code='EPL'),
     '2025-11-07 19:45:00', NULL, NULL, 'live'),
-  ('Newcastle vs Brighton – Premier League',
+  ('Newcastle vs Brighton',
     (SELECT id FROM teams WHERE name='Newcastle United'),
     (SELECT id FROM teams WHERE name='Brighton & Hove Albion'),
     (SELECT id FROM venues WHERE name='St James'' Park'),
@@ -230,25 +229,25 @@ INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, sta
 
 -- BL1
 INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
-  ('Bayern vs Dortmund – Bundesliga',
+  ('Bayern vs Dortmund',
     (SELECT id FROM teams WHERE name='FC Bayern München'),
     (SELECT id FROM teams WHERE name='Borussia Dortmund'),
     (SELECT id FROM venues WHERE name='Allianz Arena'),
     (SELECT id FROM leagues WHERE short_code='BL1'),
     '2025-11-02 18:30:00', 3, 1, 'finished'),
-  ('Leipzig vs Leverkusen – Bundesliga',
+  ('Leipzig vs Leverkusen',
     (SELECT id FROM teams WHERE name='RB Leipzig'),
     (SELECT id FROM teams WHERE name='Bayer 04 Leverkusen'),
     (SELECT id FROM venues WHERE name='Red Bull Arena Leipzig'),
     (SELECT id FROM leagues WHERE short_code='BL1'),
     '2025-11-09 17:30:00', NULL, NULL, 'scheduled'),
-  ('Stuttgart vs Frankfurt – Bundesliga',
+  ('Stuttgart vs Frankfurt',
     (SELECT id FROM teams WHERE name='VfB Stuttgart'),
     (SELECT id FROM teams WHERE name='Eintracht Frankfurt'),
     (SELECT id FROM venues WHERE name='Mercedes-Benz Arena (Stuttgart)'),
     (SELECT id FROM leagues WHERE short_code='BL1'),
     '2025-11-07 20:30:00', NULL, NULL, 'live'),
-  ('Mönchengladbach vs Freiburg – Bundesliga',
+  ('Mönchengladbach vs Freiburg',
     (SELECT id FROM teams WHERE name='Borussia Mönchengladbach'),
     (SELECT id FROM teams WHERE name='SC Freiburg'),
     (SELECT id FROM venues WHERE name='Borussia-Park'),
@@ -257,25 +256,25 @@ INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, sta
 
 -- NHL
 INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
-  ('Bruins vs Rangers – NHL Regular Season',
+  ('Bruins vs Rangers',
     (SELECT id FROM teams WHERE name='Boston Bruins'),
     (SELECT id FROM teams WHERE name='New York Rangers'),
     (SELECT id FROM venues WHERE name='TD Garden'),
     (SELECT id FROM leagues WHERE short_code='NHL'),
     '2025-10-12 19:00:00', 3, 2, 'finished'),
-  ('Maple Leafs vs Canadiens – NHL Regular Season',
+  ('Maple Leafs vs Canadiens',
     (SELECT id FROM teams WHERE name='Toronto Maple Leafs'),
     (SELECT id FROM teams WHERE name='Montréal Canadiens'),
     (SELECT id FROM venues WHERE name='Scotiabank Arena'),
     (SELECT id FROM leagues WHERE short_code='NHL'),
     '2025-11-08 01:00:00', NULL, NULL, 'scheduled'),
-  ('Red Wings vs Blackhawks – NHL Regular Season',
+  ('Red Wings vs Blackhawks',
     (SELECT id FROM teams WHERE name='Detroit Red Wings'),
     (SELECT id FROM teams WHERE name='Chicago Blackhawks'),
     (SELECT id FROM venues WHERE name='Little Caesars Arena'),
     (SELECT id FROM leagues WHERE short_code='NHL'),
     '2025-11-07 01:30:00', NULL, NULL, 'live'),
-  ('Lightning vs Penguins – NHL Regular Season',
+  ('Lightning vs Penguins',
     (SELECT id FROM teams WHERE name='Tampa Bay Lightning'),
     (SELECT id FROM teams WHERE name='Pittsburgh Penguins'),
     (SELECT id FROM venues WHERE name='Amalie Arena'),
@@ -284,25 +283,25 @@ INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, sta
 
 -- ICEHL
 INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
-  ('EC KAC vs EC Red Bull Salzburg – ICEHL',
+  ('EC KAC vs EC Red Bull Salzburg',
     (SELECT id FROM teams WHERE name='EC KAC'),
     (SELECT id FROM teams WHERE name='EC Red Bull Salzburg'),
     (SELECT id FROM venues WHERE name='Stadthalle Klagenfurt'),
     (SELECT id FROM leagues WHERE short_code='ICEHL'),
     '2025-09-28 19:15:00', 2, 2, 'finished'),
-  ('HC Bolzano vs Vienna Capitals – ICEHL',
+  ('HC Bolzano vs Vienna Capitals',
     (SELECT id FROM teams WHERE name='HC Bolzano'),
     (SELECT id FROM teams WHERE name='Vienna Capitals'),
     (SELECT id FROM venues WHERE name='PalaOnda'),
     (SELECT id FROM leagues WHERE short_code='ICEHL'),
     '2025-11-10 19:15:00', NULL, NULL, 'scheduled'),
-  ('Graz99ers vs Black Wings Linz – ICEHL',
+  ('Graz99ers vs Black Wings Linz',
     (SELECT id FROM teams WHERE name='Graz99ers'),
     (SELECT id FROM teams WHERE name='Black Wings Linz'),
     (SELECT id FROM venues WHERE name='Merkur Eisstadion'),
     (SELECT id FROM leagues WHERE short_code='ICEHL'),
     '2025-11-07 19:15:00', NULL, NULL, 'live'),
-  ('HC Innsbruck vs Fehérvár AV19 – ICEHL',
+  ('HC Innsbruck vs Fehérvár AV19',
     (SELECT id FROM teams WHERE name='HC Innsbruck'),
     (SELECT id FROM teams WHERE name='Fehérvár AV19'),
     (SELECT id FROM venues WHERE name='Tiroler Wasserkraft Arena'),
@@ -311,25 +310,25 @@ INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, sta
 
 -- NBA
 INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
-  ('Celtics vs Lakers – NBA Regular Season',
+  ('Celtics vs Lakers',
     (SELECT id FROM teams WHERE name='Boston Celtics'),
     (SELECT id FROM teams WHERE name='Los Angeles Lakers'),
     (SELECT id FROM venues WHERE name='TD Garden'),
     (SELECT id FROM leagues WHERE short_code='NBA'),
     '2025-10-05 19:30:00', 112, 105, 'finished'),
-  ('Warriors vs Heat – NBA Regular Season',
+  ('Warriors vs Heat',
     (SELECT id FROM teams WHERE name='Golden State Warriors'),
     (SELECT id FROM teams WHERE name='Miami Heat'),
     (SELECT id FROM venues WHERE name='Chase Center'),
     (SELECT id FROM leagues WHERE short_code='NBA'),
     '2025-11-09 03:30:00', NULL, NULL, 'scheduled'),
-  ('Bucks vs Mavericks – NBA Regular Season',
+  ('Bucks vs Mavericks',
     (SELECT id FROM teams WHERE name='Milwaukee Bucks'),
     (SELECT id FROM teams WHERE name='Dallas Mavericks'),
     (SELECT id FROM venues WHERE name='Fiserv Forum'),
     (SELECT id FROM leagues WHERE short_code='NBA'),
     '2025-11-07 02:00:00', NULL, NULL, 'live'),
-  ('Knicks vs Nuggets – NBA Regular Season',
+  ('Knicks vs Nuggets',
     (SELECT id FROM teams WHERE name='New York Knicks'),
     (SELECT id FROM teams WHERE name='Denver Nuggets'),
     (SELECT id FROM venues WHERE name='Madison Square Garden'),
@@ -338,27 +337,193 @@ INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, sta
 
 -- EuroLeague
 INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
-  ('Real Madrid vs FC Barcelona – EuroLeague',
+  ('Real Madrid vs FC Barcelona',
     (SELECT id FROM teams WHERE name='Real Madrid Baloncesto'),
     (SELECT id FROM teams WHERE name='FC Barcelona'),
     (SELECT id FROM venues WHERE name='WiZink Center'),
     (SELECT id FROM leagues WHERE short_code='EL'),
     '2025-11-06 20:30:00', 87, 82, 'finished'),
-  ('Anadolu Efes vs Olympiacos – EuroLeague',
+  ('Anadolu Efes vs Olympiacos',
     (SELECT id FROM teams WHERE name='Anadolu Efes'),
     (SELECT id FROM teams WHERE name='Olympiacos Piraeus'),
     (SELECT id FROM venues WHERE name='Sinan Erdem Dome'),
     (SELECT id FROM leagues WHERE short_code='EL'),
     '2025-11-13 19:30:00', NULL, NULL, 'scheduled'),
-  ('Panathinaikos vs Fenerbahçe – EuroLeague',
+  ('Panathinaikos vs Fenerbahçe',
     (SELECT id FROM teams WHERE name='Panathinaikos'),
     (SELECT id FROM teams WHERE name='Fenerbahçe'),
     (SELECT id FROM venues WHERE name='OAKA Arena'),
     (SELECT id FROM leagues WHERE short_code='EL'),
     '2025-11-07 20:00:00', NULL, NULL, 'live'),
-  ('AS Monaco vs Maccabi Tel Aviv – EuroLeague',
+  ('AS Monaco vs Maccabi Tel Aviv',
     (SELECT id FROM teams WHERE name='AS Monaco'),
     (SELECT id FROM teams WHERE name='Maccabi Tel Aviv'),
     (SELECT id FROM venues WHERE name='Salle Gaston Médecin'),
     (SELECT id FROM leagues WHERE short_code='EL'),
     '2025-10-17 20:00:00', 78, 81, 'finished');
+
+-- ===================================================================
+-- ===== EXTRA FINISHED MATCHES FOR PROBABILITY STABILITY (ADDED) ====
+-- ===================================================================
+
+-- EPL more finished
+INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
+  ('Arsenal vs Manchester United',
+    (SELECT id FROM teams WHERE name='Arsenal FC'),
+    (SELECT id FROM teams WHERE name='Manchester United'),
+    (SELECT id FROM venues WHERE name='Emirates Stadium'),
+    (SELECT id FROM leagues WHERE short_code='EPL'),
+    '2025-08-22 16:00:00', 3, 2, 'finished'),
+  ('Chelsea vs Tottenham',
+    (SELECT id FROM teams WHERE name='Chelsea FC'),
+    (SELECT id FROM teams WHERE name='Tottenham Hotspur'),
+    (SELECT id FROM venues WHERE name='Stamford Bridge'),
+    (SELECT id FROM leagues WHERE short_code='EPL'),
+    '2025-09-04 18:30:00', 0, 2, 'finished');
+
+-- BL1 extra finished
+INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
+  ('Eintracht Frankfurt vs SC Freiburg',
+    (SELECT id FROM teams WHERE name='Eintracht Frankfurt'),
+    (SELECT id FROM teams WHERE name='SC Freiburg'),
+    (SELECT id FROM venues WHERE name='Deutsche Bank Park'),
+    (SELECT id FROM leagues WHERE short_code='BL1'),
+    '2025-09-29 15:30:00', 1, 1, 'finished'),
+  ('Borussia Dortmund vs Bayer 04 Leverkusen',
+    (SELECT id FROM teams WHERE name='Borussia Dortmund'),
+    (SELECT id FROM teams WHERE name='Bayer 04 Leverkusen'),
+    (SELECT id FROM venues WHERE name='Signal Iduna Park'),
+    (SELECT id FROM leagues WHERE short_code='BL1'),
+    '2025-10-02 18:00:00', 0, 3, 'finished');
+
+-- NHL extra finished
+INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
+  ('Blackhawks vs Maple Leafs',
+    (SELECT id FROM teams WHERE name='Chicago Blackhawks'),
+    (SELECT id FROM teams WHERE name='Toronto Maple Leafs'),
+    (SELECT id FROM venues WHERE name='United Center'),
+    (SELECT id FROM leagues WHERE short_code='NHL'),
+    '2025-09-20 00:30:00', 4, 5, 'finished'),
+  ('Lightning vs Bruins',
+    (SELECT id FROM teams WHERE name='Tampa Bay Lightning'),
+    (SELECT id FROM teams WHERE name='Boston Bruins'),
+    (SELECT id FROM venues WHERE name='Amalie Arena'),
+    (SELECT id FROM leagues WHERE short_code='NHL'),
+    '2025-09-27 01:00:00', 2, 1, 'finished');
+
+-- ICEHL extra finished
+INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
+  ('Vienna Capitals vs Graz99ers',
+    (SELECT id FROM teams WHERE name='Vienna Capitals'),
+    (SELECT id FROM teams WHERE name='Graz99ers'),
+    (SELECT id FROM venues WHERE name='Steffl Arena'),
+    (SELECT id FROM leagues WHERE short_code='ICEHL'),
+    '2025-09-10 19:15:00', 5, 2, 'finished'),
+  ('Black Wings Linz vs HC Innsbruck',
+    (SELECT id FROM teams WHERE name='Black Wings Linz'),
+    (SELECT id FROM teams WHERE name='HC Innsbruck'),
+    (SELECT id FROM venues WHERE name='Linz AG Eisarena'),
+    (SELECT id FROM leagues WHERE short_code='ICEHL'),
+    '2025-09-17 19:15:00', 1, 4, 'finished');
+
+-- NBA extra finished
+INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
+  ('Milwaukee Bucks vs Denver Nuggets',
+    (SELECT id FROM teams WHERE name='Milwaukee Bucks'),
+    (SELECT id FROM teams WHERE name='Denver Nuggets'),
+    (SELECT id FROM venues WHERE name='Fiserv Forum'),
+    (SELECT id FROM leagues WHERE short_code='NBA'),
+    '2025-09-30 02:00:00', 98, 104, 'finished'),
+  ('New York Knicks vs Golden State Warriors',
+    (SELECT id FROM teams WHERE name='New York Knicks'),
+    (SELECT id FROM teams WHERE name='Golden State Warriors'),
+    (SELECT id FROM venues WHERE name='Madison Square Garden'),
+    (SELECT id FROM leagues WHERE short_code='NBA'),
+    '2025-10-04 23:00:00', 105, 101, 'finished');
+
+-- EuroLeague extra finished
+INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
+  ('Fenerbahçe vs FC Barcelona',
+    (SELECT id FROM teams WHERE name='Fenerbahçe'),
+    (SELECT id FROM teams WHERE name='FC Barcelona'),
+    (SELECT id FROM venues WHERE name='Ülker Sports Arena'),
+    (SELECT id FROM leagues WHERE short_code='EL'),
+    '2025-09-26 20:00:00', 74, 71, 'finished'),
+  ('Panathinaikos vs AS Monaco',
+    (SELECT id FROM teams WHERE name='Panathinaikos'),
+    (SELECT id FROM teams WHERE name='AS Monaco'),
+    (SELECT id FROM venues WHERE name='OAKA Arena'),
+    (SELECT id FROM leagues WHERE short_code='EL'),
+    '2025-10-01 20:00:00', 66, 70, 'finished');
+
+
+-- ==========================================================================
+-- ========== EPL EXTRA FINISHED (for stronger probability base) ============
+-- ==========================================================================
+
+-- Arsenal has more history
+INSERT INTO matches (title, home_team_id, away_team_id, venue_id, league_id, start_at, home_score, away_score, status) VALUES
+('Arsenal vs Tottenham',
+ (SELECT id FROM teams WHERE name='Arsenal FC'),
+ (SELECT id FROM teams WHERE name='Tottenham Hotspur'),
+ (SELECT id FROM venues WHERE name='Emirates Stadium'),
+ (SELECT id FROM leagues WHERE short_code='EPL'),
+ '2025-09-14 17:30:00', 2, 1, 'finished');
+
+INSERT INTO matches VALUES
+(NULL,'Arsenal vs Chelsea',
+ (SELECT id FROM teams WHERE name='Arsenal FC'),
+ (SELECT id FROM teams WHERE name='Chelsea FC'),
+ (SELECT id FROM venues WHERE name='Emirates Stadium'),
+ (SELECT id FROM leagues WHERE short_code='EPL'),
+ '2025-09-22 19:00:00',1,1,'finished');
+
+-- Man City history
+INSERT INTO matches VALUES
+(NULL,'Manchester City vs Liverpool',
+ (SELECT id FROM teams WHERE name='Manchester City'),
+ (SELECT id FROM teams WHERE name='Liverpool FC'),
+ (SELECT id FROM venues WHERE name='Etihad Stadium'),
+ (SELECT id FROM leagues WHERE short_code='EPL'),
+ '2025-09-04 20:00:00',3,2,'finished');
+
+-- Chelsea history
+INSERT INTO matches VALUES
+(NULL,'Chelsea vs Brighton',
+ (SELECT id FROM teams WHERE name='Chelsea FC'),
+ (SELECT id FROM teams WHERE name='Brighton & Hove Albion'),
+ (SELECT id FROM venues WHERE name='Stamford Bridge'),
+ (SELECT id FROM leagues WHERE short_code='EPL'),
+ '2025-08-28 16:00:00',2,0,'finished');
+
+
+-- ==========================================================================
+-- ========== BL1 EXTRA FINISHED (for stronger probability base) ============
+-- ==========================================================================
+
+-- Bayern history
+INSERT INTO matches VALUES
+(NULL,'Bayern vs Leipzig',
+ (SELECT id FROM teams WHERE name='FC Bayern München'),
+ (SELECT id FROM teams WHERE name='RB Leipzig'),
+ (SELECT id FROM venues WHERE name='Allianz Arena'),
+ (SELECT id FROM leagues WHERE short_code='BL1'),
+ '2025-09-11 18:30:00', 2,1,'finished');
+
+-- Dortmund history
+INSERT INTO matches VALUES
+(NULL,'Borussia Dortmund vs Eintracht Frankfurt',
+ (SELECT id FROM teams WHERE name='Borussia Dortmund'),
+ (SELECT id FROM teams WHERE name='Eintracht Frankfurt'),
+ (SELECT id FROM venues WHERE name='Signal Iduna Park'),
+ (SELECT id FROM leagues WHERE short_code='BL1'),
+ '2025-09-20 20:30:00', 1,0,'finished');
+
+-- Leverkusen history
+INSERT INTO matches VALUES
+(NULL,'Bayer 04 Leverkusen vs VfB Stuttgart',
+ (SELECT id FROM teams WHERE name='Bayer 04 Leverkusen'),
+ (SELECT id FROM teams WHERE name='VfB Stuttgart'),
+ (SELECT id FROM venues WHERE name='BayArena'),
+ (SELECT id FROM leagues WHERE short_code='BL1'),
+ '2025-08-29 15:30:00', 2,2,'finished');
