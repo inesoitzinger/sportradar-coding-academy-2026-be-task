@@ -1,6 +1,7 @@
 package com.sportradar.inesoitzinger.models;
 
 import com.sportradar.inesoitzinger.enums.MatchStatus;
+import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,5 +49,40 @@ public class Match {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private MatchStatus status;
+
+    public static Match schedule(
+            String title,
+            Instant startAt,
+            Team home,
+            Team away,
+            League league,
+            Venue venue
+    ) {
+
+        if (home.getId().equals(away.getId()))
+            throw new DomainRuleViolation("homeTeam and awayTeam cannot be the same");
+
+        // domain rule aus deinem Modell: Sport muss matchen
+        if (!home.getSport().equals(league.getSport()) ||
+                !away.getSport().equals(league.getSport()))
+            throw new DomainRuleViolation("both teams must match the league's sport");
+
+        if (startAt.isBefore(Instant.now()))
+            throw new DomainRuleViolation("startAt must be in the future");
+
+        Match m = new Match();
+        m.setTitle(title);
+        m.setStartAt(startAt);
+        m.setStatus(MatchStatus.scheduled);
+        m.setHomeTeam(home);
+        m.setAwayTeam(away);
+        m.setLeague(league);
+        m.setVenue(venue);
+
+        return m;
+    }
+
+
+
 
 }

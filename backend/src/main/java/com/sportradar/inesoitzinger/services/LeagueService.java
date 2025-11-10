@@ -22,7 +22,7 @@ public class LeagueService {
 
     public League getById(long id) {
         return leagueRepository.findById(id)
-                .orElseThrow(() -> new DomainRuleViolation("match not found"));
+                .orElseThrow(() -> new DomainRuleViolation("league not found"));
     }
 
     public List<League> getBySportId(long sportId) {

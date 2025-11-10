@@ -38,7 +38,6 @@ public class TeamService {
     }
 
     public List<Team> getTeamsForLeague(long leagueId){
-        // check domain existence
         leagueRepository.findById(leagueId)
                 .orElseThrow(() -> new DomainRuleViolation("league not found"));
 
