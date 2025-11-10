@@ -1,9 +1,9 @@
 package com.sportradar.inesoitzinger.services;
 
+import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
 import com.sportradar.inesoitzinger.models.Venue;
 import com.sportradar.inesoitzinger.repositories.LeagueRepository;
 import com.sportradar.inesoitzinger.repositories.VenueRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -20,7 +20,7 @@ public class VenueService {
 
     public Venue getById(long id) {
         return venueRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Venue " + id + " not found"));
+                .orElseThrow(() -> new DomainRuleViolation("match not found"));
     }
 
 }

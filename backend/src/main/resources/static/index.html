@@ -8,15 +8,14 @@
 <body>
 
 <div id="nav-placeholder"></div>
-<script>
-    fetch("/nav.html")
-        .then(r => r.text())
-        .then(html => {
-            document.getElementById("nav-placeholder").innerHTML = html;
-        });
-</script>
 
-<h1>Matches</h1>
+<h1 style="display:flex; align-items:center; gap:12px;">
+    Matches
+    <button class="nav-btn primary" onclick="toggleAddMatch()">＋ Add</button>
+
+</h1>
+
+<div id="add-match-placeholder"></div>
 
 <div class="filters">
 
@@ -49,7 +48,7 @@
     </select>
 
     <button onclick="applyFilters()">Apply filter</button>
-    <button onclick="loadAll()">Reset</button>
+    <button onclick="resetFilters()">Reset</button>
 
 
 </div>

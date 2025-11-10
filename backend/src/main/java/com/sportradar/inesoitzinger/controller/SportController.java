@@ -37,7 +37,6 @@ public class SportController {
 
     @GetMapping("/{id}/leagues")
     public List<LeagueDto> getLeaguesForSport(@PathVariable long id) {
-        sportService.getById(id);
         return leagueService.getBySportId(id).stream()
                 .map(mapper::toLeagueDto)
                 .toList();
@@ -45,11 +44,11 @@ public class SportController {
 
     @GetMapping("/{id}/teams")
     public List<TeamDto> getTeamsForSport(@PathVariable long id) {
-        sportService.getById(id); // damit 404 wenn sport id falsch
         return teamService.getBySportId(id).stream()
                 .map(mapper::toTeamDto)
                 .toList();
     }
+
 
 
 

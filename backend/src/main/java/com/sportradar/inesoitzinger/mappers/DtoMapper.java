@@ -1,6 +1,7 @@
 package com.sportradar.inesoitzinger.mappers;
 
 import com.sportradar.inesoitzinger.dtos.*;
+import com.sportradar.inesoitzinger.enums.MatchStatus;
 import com.sportradar.inesoitzinger.models.*;
 
 import org.springframework.stereotype.Component;
@@ -55,5 +56,15 @@ public class DtoMapper {
                 p
         );
     }
+
+    public Match fromCreateDto(CreateMatchRequestDto dto) {
+        Match m = new Match();
+        m.setTitle(dto.title());
+        m.setStartAt(dto.startAt());
+        m.setStatus(MatchStatus.scheduled);
+        return m;
+    }
+
+
 
 }

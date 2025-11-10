@@ -33,12 +33,11 @@ public class LeagueController {
 
     @GetMapping("/{id}/teams")
     public List<TeamDto> getTeamsForLeague(@PathVariable long id) {
-        leagueService.getById(id); // nur für 404 wenn nicht existent
-
-        return teamService.getByLeagueId(id).stream()
+        return teamService.getTeamsForLeague(id).stream()
                 .map(mapper::toTeamDto)
                 .toList();
     }
+
 
 }
 

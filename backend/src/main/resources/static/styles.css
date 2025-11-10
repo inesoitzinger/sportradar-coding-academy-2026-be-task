@@ -48,8 +48,11 @@ body{
 /* =========================
    NAV (subtle glossy)
    ========================= */
-.nav{
-    display:flex; align-items:center; gap:16px;
+.nav {
+    display:flex;
+    flex-wrap: wrap;          /* NEU */
+    align-items:center;
+    gap:16px;
     padding:12px 28px;
     position:sticky; top:0; z-index:10;
     border-bottom:1px solid var(--border);
@@ -58,8 +61,22 @@ body{
             linear-gradient(180deg, var(--nav-grad-1), var(--nav-grad-2));
     box-shadow: 0 6px 18px rgba(0,0,0,.06);
 }
-.nav-left,.nav-right{ display:flex; align-items:center; gap:12px; }
-.nav-center{ display:flex; flex:1; justify-content:center; }
+
+.nav-left,
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-shrink: 0;           /* bleiben zusammen */
+}
+
+.nav-center{
+    display:flex;
+    flex:1;
+    justify-content:center;
+    min-width: 200px;         /* darf schrumpfen aber nicht auf 0 */
+}
+
 
 /* Search input inside nav */
 #search-input{
@@ -178,14 +195,16 @@ h1{
    TABLE (card surface + hover tint)
    ========================= */
 table{
-    table-layout: fixed;
-    width: 100%;
-    border-collapse:collapse;
+    border-collapse:collapse; width:100%;
     background:
             linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0)) 0 0/100% 30% no-repeat,
             var(--card);
+    border-radius: var(--r-lg);
+    overflow:hidden;
+    box-shadow:
+            0 1px 2px rgba(0,0,0,.05),
+            0 6px 18px rgba(0,0,0,.04);
 }
-
 
 thead{
     background: linear-gradient(180deg, var(--p200), var(--p300));
@@ -196,7 +215,6 @@ th, td{
     padding:12px 16px;
     font-size:14px;
     color: inherit;
-
 }
 
 th{
@@ -243,11 +261,6 @@ td.clickable:hover{
 
 .table-container {
     padding-bottom: 40px;
-    overflow:hidden;
-    border-radius: var(--r-lg);
-    box-shadow:
-            0 1px 2px rgba(0,0,0,.05),
-            0 6px 18px rgba(0,0,0,.04);
 }
 
 /* =========================
@@ -268,6 +281,28 @@ td.clickable:hover{
     transition: width .3s ease;
 }
 
+
+/* =========================
+   ADD MATCH FORM
+   ========================= */
+
+.form-field {
+    padding:8px 12px;
+    border:1px solid var(--border);
+    border-radius: var(--r-md);
+    background:#fff;
+    font:inherit;
+
+    transition: border var(--dur), box-shadow var(--dur);
+}
+
+.form-field:focus {
+    border-color: var(--primary);
+    box-shadow:0 0 0 2px rgba(164,88,165,.2);
+    outline:none;
+}
+
+.add-match.collapsed { display:none; }
 
 
 /* =========================

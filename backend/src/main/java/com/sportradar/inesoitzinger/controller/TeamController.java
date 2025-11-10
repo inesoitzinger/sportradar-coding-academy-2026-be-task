@@ -33,10 +33,10 @@ public class TeamController {
 
     @GetMapping("/{id}/leagues")
     public List<LeagueDto> getLeaguesForTeam(@PathVariable long id) {
-        teamService.getById(id); // just to throw 404 if unknown team
         return leagueService.getByTeamId(id).stream()
                 .map(mapper::toLeagueDto)
                 .toList();
     }
+
 }
 

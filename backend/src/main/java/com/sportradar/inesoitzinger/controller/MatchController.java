@@ -1,10 +1,13 @@
 package com.sportradar.inesoitzinger.controller;
 
+import com.sportradar.inesoitzinger.dtos.CreateMatchRequestDto;
 import com.sportradar.inesoitzinger.dtos.MatchDto;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.Match;
 import com.sportradar.inesoitzinger.services.MatchService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +33,14 @@ public class MatchController {
 
     @GetMapping("/{id}")
     public MatchDto getOne(@PathVariable long id) {
-        Match m = matchService.getById(id);
-        Double p = matchService.calcHomeWinProbability(m);
-        return mapper.toMatchDto(m, p);
+        return matchService.getDtoById(id);
     }
+
+
+    @PostMapping
+    public ResponseEntity<Long> create(@Valid @RequestBody CreateMatchRequestDto req) {
+        return ResponseEntity.ok(matchService.createMatch(req).getId());
+    }
+
 
 }
