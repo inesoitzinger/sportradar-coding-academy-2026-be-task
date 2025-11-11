@@ -88,6 +88,9 @@ Public endpoints (selection):
 - `GET /teams/{id}`
 - `GET /teams/{id}/leagues`
 
+- `GET /venues`
+- `GET /venues/{id}`
+
 - `GET /matches` (supports filters via `MatchSearchDto`, `q` triggers full-text search)
 - `GET /matches/{id}`
 - `POST /matches`
