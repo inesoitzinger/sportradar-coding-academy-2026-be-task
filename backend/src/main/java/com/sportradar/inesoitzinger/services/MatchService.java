@@ -5,6 +5,7 @@ import com.sportradar.inesoitzinger.dtos.MatchDto;
 import com.sportradar.inesoitzinger.dtos.MatchSearchDto;
 import com.sportradar.inesoitzinger.enums.MatchStatus;
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.Match;
 import com.sportradar.inesoitzinger.repositories.LeagueRepository;
@@ -27,7 +28,6 @@ public class MatchService {
     private final TeamRepository teamRepository;
     private final VenueRepository venueRepository;
     private final LeagueRepository leagueRepository;
-    private final WinProbabilityService winProbabilityService;
 
     private final DtoMapper dtoMapper;
 
@@ -37,7 +37,7 @@ public class MatchService {
 
     public Match getById(long id) {
         return matchRepository.findById(id)
-                .orElseThrow(() -> new DomainRuleViolation("match not found"));
+                .orElseThrow(() -> new NotFoundException("match not found"));
     }
 
     public List<Match> search(MatchSearchDto dto) {

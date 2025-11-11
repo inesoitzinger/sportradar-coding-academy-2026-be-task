@@ -36,7 +36,7 @@ public class DtoMapper {
                 e.getId(),
                 e.getName(),
                 e.getCity(),
-                Math.toIntExact(e.getCapacity())
+                (long) Math.toIntExact(e.getCapacity())
         );
     }
 

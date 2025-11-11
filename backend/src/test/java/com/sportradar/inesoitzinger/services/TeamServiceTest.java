@@ -1,6 +1,7 @@
 package com.sportradar.inesoitzinger.services;
 
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.models.League;
 import com.sportradar.inesoitzinger.models.Sport;
 import com.sportradar.inesoitzinger.models.Team;
@@ -48,7 +49,7 @@ class TeamServiceTest {
         when(teamRepo.findById(9L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.getById(9L))
-                .isInstanceOf(DomainRuleViolation.class);
+                .isInstanceOf(NotFoundException.class);
     }
 
     @Test

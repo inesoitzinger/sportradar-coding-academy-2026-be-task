@@ -1,11 +1,14 @@
 package com.sportradar.inesoitzinger.controller;
 
 import com.sportradar.inesoitzinger.dtos.LeagueDto;
+import com.sportradar.inesoitzinger.dtos.TeamDto;
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.League;
-import com.sportradar.inesoitzinger.services.TeamService;
+import com.sportradar.inesoitzinger.models.Team;
 import com.sportradar.inesoitzinger.services.LeagueService;
+import com.sportradar.inesoitzinger.services.TeamService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,74 +40,64 @@ class TeamControllerTest {
     @Test
     void getAll_returnsList() throws Exception {
 
-        League l = new League();
-        l.setId(22L);
-        l.setName("Bundesliga");
+        Team t = new Team();
+        t.setId(10L);
+        t.setName("Liverpool");
 
-        Mockito.when(leagueService.findAll()).thenReturn(List.of(l));
+        Mockito.when(teamService.findAll()).thenReturn(List.of(t));
 
-        Mockito.when(mapper.toLeagueDto(l)).thenReturn(
-                new LeagueDto(22L, "Bundesliga", null, null, null)
-        );
+        Mockito.when(mapper.toTeamDto(t))
+                .thenReturn(new TeamDto(10L, "Liverpool", null));
 
-        mvc.perform(get("/leagues"))
+        mvc.perform(get("/teams"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(22))
-                .andExpect(jsonPath("$[0].name").value("Bundesliga"));
+                .andExpect(jsonPath("$[0].id").value(10))
+                .andExpect(jsonPath("$[0].name").value("Liverpool"));
     }
 
     @Test
     void getOne_returnsDto() throws Exception {
 
-        League l = new League();
-        l.setId(55L);
-        l.setName("Premier League");
+        Team t = new Team();
+        t.setId(20L);
+        t.setName("Arsenal");
 
-        Mockito.when(leagueService.getById(55L)).thenReturn(l);
+        Mockito.when(teamService.getById(20L)).thenReturn(t);
 
-        Mockito.when(mapper.toLeagueDto(l)).thenReturn(
-                new LeagueDto(55L, "Premier League", null, null, null)
-        );
+        Mockito.when(mapper.toTeamDto(t))
+                .thenReturn(new TeamDto(20L, "Arsenal", null));
 
-        mvc.perform(get("/leagues/55"))
+        mvc.perform(get("/teams/20"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(55))
-                .andExpect(jsonPath("$.name").value("Premier League"));
+                .andExpect(jsonPath("$.id").value(20))
+                .andExpect(jsonPath("$.name").value("Arsenal"));
     }
 
     @Test
     void getLeaguesForTeam_returnsList() throws Exception {
 
         League l = new League();
-        l.setId(77L);
+        l.setId(30L);
         l.setName("Premier League");
 
-        Mockito.when(leagueService.getByTeamId(5L)).thenReturn(List.of(l));
+        Mockito.when(leagueService.getByTeamId(99L)).thenReturn(List.of(l));
 
         Mockito.when(mapper.toLeagueDto(l))
-                .thenReturn(new LeagueDto(
-                        77L,
-                        "Premier League",
-                        null,
-                        null,
-                        null
-                ));
+                .thenReturn(new LeagueDto(30L, "Premier League", null, null, null));
 
-
-
-        mvc.perform(get("/teams/5/leagues"))
+        mvc.perform(get("/teams/99/leagues"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(77))
+                .andExpect(jsonPath("$[0].id").value(30))
                 .andExpect(jsonPath("$[0].name").value("Premier League"));
     }
 
     @Test
-    void getLeaguesForTeam_teamNotFound_returns400() throws Exception {
+    void getLeaguesForTeam_teamNotFound_returns404() throws Exception {
 
         Mockito.when(leagueService.getByTeamId(anyLong()))
-                .thenThrow(new DomainRuleViolation("team not found"));
+                .thenThrow(new NotFoundException("team not found"));
 
         mvc.perform(get("/teams/999/leagues"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 }

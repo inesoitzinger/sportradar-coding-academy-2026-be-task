@@ -163,18 +163,22 @@ function resetFilters() {
 function searchGlobal() {
     const q = (document.getElementById('search-input')?.value || "").trim();
 
-    // update URL to ?q or /
+    // if we are NOT on index.html → go to index.html with query
+    if (!location.pathname.endsWith("/") && !location.pathname.endsWith("/index.html")) {
+        location.href = q ? `/?q=${encodeURIComponent(q)}` : "/";
+        return;
+    }
+
     history.replaceState(null, "", q ? `?q=${encodeURIComponent(q)}` : "/");
 
-    // clear selects when searching
     ["sport","status","venue","league","team"].forEach(k => {
         const el = document.getElementById(`${k}-select`);
         if (el) el.value = "";
     });
 
-    // load search or all
     load(q ? `/matches?q=${encodeURIComponent(q)}` : `/matches`);
 }
+
 
 
 /* ===== FILTER SELECT OPTIONS (once) ===== */
@@ -401,17 +405,38 @@ async function recomputeAddMatchForm(){
 }
 
 async function saveMatch(){
+    const title = document.getElementById("title-input").value.trim();
+    const startAt = document.getElementById("startAt-input").value;
+    const leagueId = document.getElementById("league-select-add").value;
+    const venueId = document.getElementById("venue-select-add").value;
+    const homeTeamId = document.getElementById("home-select-add").value;
+    const awayTeamId = document.getElementById("away-select-add").value;
+
+    // frontend validation
+    if (!title) return alert("Title is required.");
+    if (!startAt) return alert("Start time is required.");
+    if (!leagueId) return alert("League is required.");
+    if (!venueId) return alert("Venue is required.");
+    if (!homeTeamId) return alert("Home team is required.");
+    if (!awayTeamId) return alert("Away team is required.");
+    if (homeTeamId === awayTeamId) return alert("Home and away team must be different.");
+
+    // check startAt is future
+    const dt = new Date(startAt);
+    if (dt < new Date()) return alert("Start time must be in the future.");
+
     // build payload
     const body = {
-        title: document.getElementById("title-input").value,
-        leagueId: +document.getElementById("league-select-add").value,
-        venueId: +document.getElementById("venue-select-add").value,
-        homeTeamId: +document.getElementById("home-select-add").value,
-        awayTeamId: +document.getElementById("away-select-add").value,
-        startAt: new Date(document.getElementById("startAt-input").value).toISOString()
+        title,
+        leagueId: +leagueId,
+        venueId: +venueId,
+        homeTeamId: +homeTeamId,
+        awayTeamId: +awayTeamId,
+        startAt: dt.toISOString()
     };
 
-    // POST and open created resource
+
+    // POST and reload
     const r = await fetch("/matches", {
         method: "POST",
         headers: {"Content-Type":"application/json"},
@@ -419,12 +444,28 @@ async function saveMatch(){
     });
 
     if (!r.ok){
-        alert("Error saving match");
+        const err = await r.json().catch(()=>({}));
+        alert(err.error || "Error saving match");
         return;
+    }else{
+        alert("Match created ✅");
     }
 
-    const newId = await r.json();
-    openMatch(newId);
+    // reset form
+    document.getElementById("title-input").value = "";
+    document.getElementById("startAt-input").value = "";
+    document.getElementById("league-select-add").value = "";
+    document.getElementById("venue-select-add").value = "";
+    document.getElementById("home-select-add").value = "";
+    document.getElementById("away-select-add").value = "";
+
+    // collapse add match box
+    toggleAddMatch();
+
+    // reload current matches list with current filters/search
+    const url = location.search ? `/matches${location.search}` : `/matches`;
+    load(url);
+
 }
 
 

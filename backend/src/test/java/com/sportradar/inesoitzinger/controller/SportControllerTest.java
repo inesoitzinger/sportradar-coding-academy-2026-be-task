@@ -4,6 +4,7 @@ import com.sportradar.inesoitzinger.dtos.LeagueDto;
 import com.sportradar.inesoitzinger.dtos.SportDto;
 import com.sportradar.inesoitzinger.dtos.TeamDto;
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.League;
 import com.sportradar.inesoitzinger.models.Sport;
@@ -66,12 +67,12 @@ class SportControllerTest {
     }
 
     @Test
-    void getOne_notFound_returns400() throws Exception {
+    void getOne_notFound_returns404() throws Exception {
         Mockito.when(sportService.getById(anyLong()))
-                .thenThrow(new DomainRuleViolation("sport not found"));
+                .thenThrow(new NotFoundException("sport not found"));
 
         mvc.perform(get("/sports/999"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -107,20 +108,20 @@ class SportControllerTest {
     }
 
     @Test
-    void getLeaguesForSport_sportNotFound_returns400() throws Exception {
+    void getLeaguesForSport_sportNotFound_returns404() throws Exception {
         Mockito.when(leagueService.getBySportId(anyLong()))
-                .thenThrow(new DomainRuleViolation("sport not found"));
+                .thenThrow(new NotFoundException("sport not found"));
 
         mvc.perform(get("/sports/987/leagues"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    void getTeamsForSport_sportNotFound_returns400() throws Exception {
+    void getTeamsForSport_sportNotFound_returns404() throws Exception {
         Mockito.when(teamService.getBySportId(anyLong()))
-                .thenThrow(new DomainRuleViolation("sport not found"));
+                .thenThrow(new NotFoundException("sport not found"));
 
         mvc.perform(get("/sports/987/teams"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 }

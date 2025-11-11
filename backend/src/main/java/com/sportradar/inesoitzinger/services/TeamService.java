@@ -1,6 +1,7 @@
 package com.sportradar.inesoitzinger.services;
 
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.models.Team;
 import com.sportradar.inesoitzinger.repositories.LeagueRepository;
 import com.sportradar.inesoitzinger.repositories.SportRepository;
@@ -22,12 +23,12 @@ public class TeamService {
 
     public Team getById(long id) {
         return teamRepository.findById(id)
-                .orElseThrow(() -> new DomainRuleViolation("match not found"));
+                .orElseThrow(() -> new NotFoundException("match not found"));
     }
 
     public List<Team> getBySportId(long sportId) {
         sportRepository.findById(sportId)
-                .orElseThrow(() -> new DomainRuleViolation("sport not found"));
+                .orElseThrow(() -> new NotFoundException("sport not found"));
 
         return teamRepository.findBySportId(sportId);
     }
@@ -39,7 +40,7 @@ public class TeamService {
 
     public List<Team> getTeamsForLeague(long leagueId){
         leagueRepository.findById(leagueId)
-                .orElseThrow(() -> new DomainRuleViolation("league not found"));
+                .orElseThrow(() -> new NotFoundException("league not found"));
 
         return teamRepository.findByLeagueId(leagueId);
     }

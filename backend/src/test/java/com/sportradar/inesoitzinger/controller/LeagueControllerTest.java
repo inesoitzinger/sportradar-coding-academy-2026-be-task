@@ -3,6 +3,7 @@ package com.sportradar.inesoitzinger.controller;
 import com.sportradar.inesoitzinger.dtos.LeagueDto;
 import com.sportradar.inesoitzinger.dtos.TeamDto;
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.League;
 import com.sportradar.inesoitzinger.models.Team;
@@ -100,12 +101,12 @@ class LeagueControllerTest {
 
 
     @Test
-    void getTeamsForLeague_leagueNotFound_returns400() throws Exception {
+    void getTeamsForLeague_leagueNotFound_returns404() throws Exception {
 
         Mockito.when(teamService.getTeamsForLeague(anyLong()))
-                .thenThrow(new DomainRuleViolation("league not found"));
+                .thenThrow(new NotFoundException("league not found"));
 
         mvc.perform(get("/leagues/999/teams"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 }

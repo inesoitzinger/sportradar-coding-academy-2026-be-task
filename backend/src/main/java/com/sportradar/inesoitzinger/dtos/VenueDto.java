@@ -21,7 +21,7 @@ public record VenueDto(
         String city,
 
         /**
-         * Country where the venue is located.
+         * Capacity of venue.
          */
-        String country
+        Long capacity
 ) {}

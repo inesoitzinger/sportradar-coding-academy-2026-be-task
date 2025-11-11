@@ -2,6 +2,7 @@ package com.sportradar.inesoitzinger.controller;
 
 import com.sportradar.inesoitzinger.dtos.VenueDto;
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.Venue;
 import com.sportradar.inesoitzinger.services.VenueService;
@@ -63,12 +64,12 @@ class VenueControllerTest {
     }
 
     @Test
-    void getOne_notFound_returns400() throws Exception {
+    void getOne_notFound_returns404() throws Exception {
 
         Mockito.when(venueService.getById(anyLong()))
-                .thenThrow(new DomainRuleViolation("venue not found"));
+                .thenThrow(new NotFoundException("venue not found"));
 
         mvc.perform(get("/venues/999"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 }

@@ -3,6 +3,8 @@ package com.sportradar.inesoitzinger.services;
 import com.sportradar.inesoitzinger.dtos.CreateMatchRequestDto;
 import com.sportradar.inesoitzinger.dtos.MatchSearchDto;
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
+import com.sportradar.inesoitzinger.mappers.DtoMapper;
 import com.sportradar.inesoitzinger.models.*;
 import com.sportradar.inesoitzinger.repositories.LeagueRepository;
 import com.sportradar.inesoitzinger.repositories.MatchRepository;
@@ -23,15 +25,13 @@ class MatchServiceTest {
     TeamRepository teamRepository = mock(TeamRepository.class);
     VenueRepository venueRepository = mock(VenueRepository.class);
     LeagueRepository leagueRepository = mock(LeagueRepository.class);
-    WinProbabilityService winProbabilityService = mock(WinProbabilityService.class);
 
     MatchService service = new MatchService(
             matchRepository,
             teamRepository,
             venueRepository,
             leagueRepository,
-            winProbabilityService,
-            null // mapper wird hier nicht benötigt
+            null
     );
 
 
@@ -50,7 +50,7 @@ class MatchServiceTest {
         when(matchRepository.findById(9L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.getById(9L))
-                .isInstanceOf(DomainRuleViolation.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("match not found");
     }
 

@@ -1,6 +1,7 @@
 package com.sportradar.inesoitzinger.services;
 
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.models.Venue;
 import com.sportradar.inesoitzinger.repositories.LeagueRepository;
 import com.sportradar.inesoitzinger.repositories.VenueRepository;
@@ -20,7 +21,7 @@ public class VenueService {
 
     public Venue getById(long id) {
         return venueRepository.findById(id)
-                .orElseThrow(() -> new DomainRuleViolation("match not found"));
+                .orElseThrow(() -> new NotFoundException("match not found"));
     }
 
 }

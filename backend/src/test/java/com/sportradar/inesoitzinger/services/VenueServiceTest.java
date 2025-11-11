@@ -1,6 +1,7 @@
 package com.sportradar.inesoitzinger.services;
 
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.models.Venue;
 import com.sportradar.inesoitzinger.repositories.LeagueRepository;
 import com.sportradar.inesoitzinger.repositories.VenueRepository;
@@ -44,6 +45,6 @@ class VenueServiceTest {
         when(venueRepo.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.getById(999L))
-                .isInstanceOf(DomainRuleViolation.class);
+                .isInstanceOf(NotFoundException.class);
     }
 }

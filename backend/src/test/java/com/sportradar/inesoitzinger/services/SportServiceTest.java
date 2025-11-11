@@ -1,6 +1,7 @@
 package com.sportradar.inesoitzinger.services;
 
 import com.sportradar.inesoitzinger.exceptions.DomainRuleViolation;
+import com.sportradar.inesoitzinger.exceptions.NotFoundException;
 import com.sportradar.inesoitzinger.models.Sport;
 import com.sportradar.inesoitzinger.repositories.SportRepository;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,6 @@ class SportServiceTest {
         when(repo.findById(999L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> service.getById(999L))
-                .isInstanceOf(DomainRuleViolation.class);
+                .isInstanceOf(NotFoundException.class);
     }
 }

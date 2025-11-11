@@ -1,0 +1,51 @@
+AI usage declaration
+
+During this assignment I used ChatGPT (GPT-5) continuously as a support tool.
+
+In practice this means:
+- I did not sit fully alone in a vacuum
+- I used AI the same way I would normally use a senior engineer as a sparring partner
+- sometimes I asked for code examples or best practice patterns
+- in some cases I partially used or adapted small code fragments that AI suggested → but I always understood, modified and integrated them consciously
+
+I remained the owner of the code.
+
+The architectural choices, domain model, REST design, exception strategy, DTO boundaries and final implementation decisions are mine.
+
+What AI specifically helped with
+- thinking through domain modeling (Sport → League → Team → Match)
+- clarifying where domain rules should live (aggregate vs service vs controller)
+- discussing REST resource naming vs filtering
+- deciding when data should return null vs numeric probability
+- unblocking myself when I hit annoying error messages (Spring injection, DTO type issues)
+- improving the README to be easier to consume for a reviewer
+- discussing how to phrase documentation to make the project more “reviewable”
+
+What AI did not do
+- AI never generated the full project
+- AI never dumped a one-shot solution
+- AI never replaced my implementation
+- AI never owned any file / feature end-to-end
+
+If AI suggested something, it entered the project only after I:
+- understood it
+- evaluated it
+- adapted it to my structure
+
+Why I believe this usage is legitimate
+
+Software engineering is not just “typing code”.
+
+This challenge tested:
+- domain thinking
+- modelling
+- API design
+- correctness
+- clarity
+- boundary decisions
+
+AI supported me in thinking – not in outsourcing.
+
+I view this as equivalent to having a senior engineer on call for feedback.
+
+I wrote, read, edited, integrated and debugged every final line.
