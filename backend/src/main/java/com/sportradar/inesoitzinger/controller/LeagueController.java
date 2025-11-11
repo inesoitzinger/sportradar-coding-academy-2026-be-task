@@ -19,6 +19,11 @@ public class LeagueController {
     private final TeamService teamService;
     private final DtoMapper mapper;
 
+    /**
+     * Returns all leagues in the system.
+     *
+     * @return list of leagues
+     */
     @GetMapping
     public List<LeagueDto> getAll() {
         return leagueService.findAll().stream()
@@ -26,11 +31,23 @@ public class LeagueController {
                 .toList();
     }
 
+    /**
+     * Returns a single league by id.
+     *
+     * @param id league id
+     * @return league details
+     */
     @GetMapping("/{id}")
     public LeagueDto getOne(@PathVariable long id) {
         return mapper.toLeagueDto(leagueService.getById(id));
     }
 
+    /**
+     * Returns all teams that participate in the given league.
+     *
+     * @param id league id
+     * @return list of teams for that league
+     */
     @GetMapping("/{id}/teams")
     public List<TeamDto> getTeamsForLeague(@PathVariable long id) {
         return teamService.getTeamsForLeague(id).stream()
@@ -38,6 +55,4 @@ public class LeagueController {
                 .toList();
     }
 
-
 }
-

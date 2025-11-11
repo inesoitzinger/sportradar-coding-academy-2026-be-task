@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Translates internal exceptions into structured JSON error responses.
+ *
+ * This keeps the HTTP contract stable and prevents leaking internal exceptions.
+ * Domain violations and validation errors become 400 responses with user-facing messages.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
