@@ -51,6 +51,12 @@ spring.jpa.show-sql=true
 
 ### 3) Run
 
+Navigate to Springboot App:
+
+```bash
+cd springboot_app
+```
+
 With Maven Wrapper:
 
 ```bash
@@ -61,7 +67,7 @@ Or build + run:
 
 ```bash
 ./mvnw clean package
-java -jar target/*.jar
+java -jar target/app-0.0.1-SNAPSHOT.jar
 ```
 → The application runs on http://localhost:8080
 
@@ -87,9 +93,6 @@ Public endpoints (selection):
 - `GET /teams`
 - `GET /teams/{id}`
 - `GET /teams/{id}/leagues`
-
-- `GET /venues`
-- `GET /venues/{id}`
 
 - `GET /matches` (supports filters via `MatchSearchDto`, `q` triggers full-text search)
 - `GET /matches/{id}`
